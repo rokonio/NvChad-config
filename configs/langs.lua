@@ -91,45 +91,43 @@ end
 
 M.plugin = function()
   local default_plugins = {
-    -- enable(
-    --    {
-    --       "simrat39/rust-tools.nvim",
-    --       dependencies = {
-    --         "neovim/nvim-lspconfig",
-    --       },
-    --       config = function()
-    --         local opts = {
-    --           -- all the opts to send to nvim-lspconfig
-    --           -- these override the defaults set by rust-tools.nvim
-    --           -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-    --           server = {
-    --             -- standalone file support
-    --             -- setting it to false may improve startup time
-    --             standalone = true,
-    --             on_attach = require("plugins.configs.lspconfig").on_attach,
-    --             capabilities = require("plugins.configs.lspconfig").capabilities,
-    --             settings = {
-    --               -- to enable rust-analyzer settings visit:
-    --               -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-    --               ["rust-analyzer"] = {
-    --                 -- enable clippy on save
-    --                 check = {
-    --                   command = "clippy",
-    --                 },
-    --                 imports = {
-    --                   granularity = {
-    --                     group = "module",
-    --                     enforce = true,
-    --                   },
-    --                 },
-    --               },
-    --             }, -- rust-analyer options
-    --           },
-    --         }
-    --         require("rust-tools").setup(opts)
-    --       end,
-    --     }
-    --   ,rust),
+    enable({
+      "simrat39/rust-tools.nvim",
+      dependencies = {
+        "neovim/nvim-lspconfig",
+      },
+      config = function()
+        local opts = {
+          -- all the opts to send to nvim-lspconfig
+          -- these override the defaults set by rust-tools.nvim
+          -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
+          server = {
+            -- standalone file support
+            -- setting it to false may improve startup time
+            standalone = true,
+            on_attach = require("plugins.configs.lspconfig").on_attach,
+            capabilities = require("plugins.configs.lspconfig").capabilities,
+            settings = {
+              -- to enable rust-analyzer settings visit:
+              -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+              ["rust-analyzer"] = {
+                -- enable clippy on save
+                check = {
+                  command = "clippy",
+                },
+                imports = {
+                  granularity = {
+                    group = "module",
+                    enforce = true,
+                  },
+                },
+              },
+            }, -- rust-analyer options
+          },
+        }
+        require("rust-tools").setup(opts)
+      end,
+    }, rust),
   }
   return default_plugins
 end
