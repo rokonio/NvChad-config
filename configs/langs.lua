@@ -1,19 +1,23 @@
 local M = {}
 
-local function enable(name, when)
+local function enable_parser(name, when)
   return (when and name or nil)
 end
+local enable_plugin = enable_parser
 local function enable_lsp(name, when)
   return (when and name or "marksman")
 end
 local function enable_src(b, name, when)
   return (when and name or b.completion.spell)
 end
+local function enable_prettier(name, when)
+  return (when and name or "")
+end
 
 -- called in overrides.lua, plugins.lua, NEEDED null-ls
 
 -- Don't forget to run :MasonInstallAll when changing one of the value
-local rust = true
+local rust = false
 local typescript = false
 local lua = true
 local c = false
@@ -31,16 +35,16 @@ end
 M.parser = function()
   return {
     "vim",
-    enable("lua", lua),
-    enable("rust", rust),
-    enable("html", html),
-    enable("css", css),
-    enable("javascript", javascript),
-    enable("typescript", typescript),
-    enable("tsx", typescript),
-    enable("c", c),
     "markdown",
     "markdown_inline",
+    enable_parser("lua", lua),
+    enable_parser("rust", rust),
+    enable_parser("html", html),
+    enable_parser("css", css),
+    enable_parser("javascript", javascript),
+    enable_parser("typescript", typescript),
+    enable_parser("tsx", typescript),
+    enable_parser("c", c),
   }
 end
 
@@ -61,9 +65,6 @@ M.lsp = function()
 end
 
 M.sources = function(b)
-  local function enable_ft(name, when)
-    return (when and name or "")
-  end
   local default_sources = {
     b.completion.spell,
 
@@ -74,11 +75,11 @@ M.sources = function(b)
       b.formatting.prettier.with {
         filetypes = {
           "markdown",
-          enable_ft("typescript", typescript),
-          enable_ft("javascript", javascript),
-          enable_ft("rust", rust),
-          enable_ft("html", html),
-          enable_ft("css", css),
+          enable_prettier("typescript", typescript),
+          enable_prettier("javascript", javascript),
+          enable_prettier("rust", rust),
+          enable_prettier("html", html),
+          enable_prettier("css", css),
         },
       },
       (typescript or javascript or rust or html or css)
@@ -91,7 +92,7 @@ end
 
 M.plugin = function()
   local default_plugins = {
-    enable({
+    enable_plugin({
       "simrat39/rust-tools.nvim",
       dependencies = {
         "neovim/nvim-lspconfig",
