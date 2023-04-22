@@ -70,7 +70,7 @@ Add the Treesitter parser name in M.parser. For example:
 
 ```lua
 return {
-  enable_parser("rust", lua)
+  enable_parser("lua", lua)
 }
 ```
 
