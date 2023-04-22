@@ -24,15 +24,6 @@ null_ls.setup {
           vim.lsp.buf.format()
         end,
       })
-    else -- Or indent with = if not possible
-      vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = augroup,
-        buffer = bufnr,
-        callback = function()
-          vim.cmd [[:normal gg=G]]
-        end,
-      })
     end
   end,
   sources = sources,
