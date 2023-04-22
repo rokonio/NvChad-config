@@ -43,7 +43,7 @@ Copy the config:
 
 ```bash
 cd ~/.config/NvChad/lua/
-git clone <TODO link of this repo> custom
+git clone https://github.com/rokonio/NvChad-config custom/
 ```
 
 Run nvim, see everything being downloaded, relaunch and tadaaa !
@@ -54,7 +54,7 @@ In NvChad, you can install lsp with Mason, but for anything more advanced, you h
 This is where my config tries to come handy. Just enable a flag in configs/langs.lua for your language and the config will set it up for you.
 
 I currently only have settings for languages I use, but my goal is to make an opiniated configuration for the maximum languages I can.
-If your configuration for a language you isn't present or could be improved, feel free to open an issuer or even submit a pull request !
+If your configuration for a language you use isn't present or could be improved, feel free to open an issue or even submit a pull request !
 
 When you enable a lang, don't forget to run `:MasonInstallAll` for the changes to take effects.
 
