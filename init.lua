@@ -6,10 +6,20 @@ autocmd("VimResized", {
   command = "tabdo wincmd =",
 })
 
+autocmd("TextYankPost", {
+  callback = function()
+    vim.highlight.on_yank { higroup = "Visual", timeout = 200 }
+  end,
+})
+
 -- I've never found status line to be useful
 vim.o.laststatus = 0
 vim.opt.cmdheight = 0
 vim.opt.relativenumber = true
+vim.opt.autoindent = true
+vim.opt.expandtab = true -- convert tabs to spaces
+-- vim.opt.shiftwidth = 4 -- the number of spaces inserted for each indentation
+-- vim.opt.softtabstop = 4
 
 autocmd("QuitPre", {
   callback = function()

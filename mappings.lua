@@ -4,7 +4,10 @@ local M = {}
 M.general = {
   n = {
     [";"] = { ":", "enter command mode", opts = { nowait = true } },
-    ["<C-s>"] = { "<cmd> w <CR><cmd> lua vim.lsp.buf.format{ async = true } <CR>", "save file" },
+    ["<C-s>"] = {
+      "<cmd> w <CR>",
+      "save file",
+    },
     ["<leader>un"] = { "<cmd> set nu! <CR>", "toggle line number" },
     ["<leader>ur"] = { "<cmd> set rnu! <CR>", "toggle relative number" },
     ["<leader>ub"] = {

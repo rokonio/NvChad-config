@@ -110,6 +110,17 @@ local plugins = {
       }
     end,
   },
+  {
+    "Darazaki/indent-o-matic",
+    lazy = false,
+  },
+  {
+    "ggandor/leap.nvim",
+    lazy = false,
+    config = function()
+      require("leap").add_default_mappings(true)
+    end,
+  },
 
   -- To make a plugin not be loaded
   -- {

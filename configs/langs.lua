@@ -96,6 +96,7 @@ M.plugin = function()
       dependencies = {
         "neovim/nvim-lspconfig",
       },
+      ft = "rust",
       config = function()
         local opts = {
           -- all the opts to send to nvim-lspconfig
@@ -105,14 +106,12 @@ M.plugin = function()
             -- standalone file support
             -- setting it to false may improve startup time
             standalone = true,
-            on_attach = require("plugins.configs.lspconfig").on_attach,
-            capabilities = require("plugins.configs.lspconfig").capabilities,
             settings = {
               -- to enable rust-analyzer settings visit:
               -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
               ["rust-analyzer"] = {
                 -- enable clippy on save
-                check = {
+                checkOnSave = {
                   command = "clippy",
                 },
                 imports = {
