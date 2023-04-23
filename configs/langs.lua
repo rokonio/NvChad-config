@@ -1,3 +1,15 @@
+-- Don't forget to run :MasonInstallAll when changing one of the value
+local rust = true
+local typescript = true
+local lua = true
+local c = false
+local cpp = false
+local html = false
+local css = false
+local javascript = false
+
+-----------------------------------------------
+
 local M = {}
 
 local function enable_parser(name, when)
@@ -13,18 +25,6 @@ end
 local function enable_prettier(name, when)
   return (when and name or "")
 end
-
--- called in overrides.lua, plugins.lua, NEEDED null-ls
-
--- Don't forget to run :MasonInstallAll when changing one of the value
-local rust = true
-local typescript = false
-local lua = true
-local c = false
-local cpp = false
-local html = false
-local css = false
-local javascript = false
 
 if typescript then
   html = true
@@ -66,10 +66,6 @@ end
 
 M.sources = function(b)
   local default_sources = {
-    b.completion.spell,
-
-    -- webdev stuff
-    enable_src(b, b.formatting.deno_fmt, (typescript or javascript)),
     enable_src(
       b,
       b.formatting.prettier.with {
@@ -84,6 +80,9 @@ M.sources = function(b)
       },
       (typescript or javascript or rust or html or css)
     ),
+    b.completion.spell,
+
+    enable_src(b, b.formatting.deno_fmt, (typescript or javascript)),
     enable_src(b, b.formatting.stylua, lua),
     enable_src(b, b.formatting.clang_format, (c or cpp)),
   }

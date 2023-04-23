@@ -6,25 +6,18 @@ end
 
 local b = null_ls.builtins
 local sources = require("custom.configs.langs").sources(b)
-
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+local U = require("custom.configs.utils")
+local utils = require "core.utils"
 
 null_ls.setup {
   debug = true,
   -- Format with LSP if possible
   on_attach = function(client, bufnr)
-    if client.supports_method "textDocument/formatting" then
-      client.server_capabilities.documentFormattingProvider = true
-      client.server_capabilities.documentRangeFormattingProvider = true
-      vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = augroup,
-        buffer = bufnr,
-        callback = function()
-          vim.lsp.buf.format()
-        end,
-      })
-    end
+    client.server_capabilities.documentFormattingProvider = true
+    client.server_capabilities.documentRangeFormattingProvider = true
+
+    U.fmt_on_save(client, bufnr)
+    utils.load_mappings("lspconfig", { buffer = bufnr })
   end,
   sources = sources,
 }

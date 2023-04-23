@@ -11,6 +11,14 @@ local plugins = {
     dependencies = {
       -- format & linting
       {
+        "williamboman/mason.nvim",
+        opts = overrides.mason,
+      },
+      {
+        "williamboman/mason-lspconfig",
+        after = "mason.nvim",
+      },
+      {
         "jose-elias-alvarez/null-ls.nvim",
         config = function()
           require "custom.configs.null-ls"
@@ -24,10 +32,6 @@ local plugins = {
   },
 
   -- override plugin configs
-  {
-    "williamboman/mason.nvim",
-    opts = overrides.mason,
-  },
 
   {
     "nvim-treesitter/nvim-treesitter",
@@ -59,7 +63,6 @@ local plugins = {
     end,
   },
   {
-
     "lukas-reineke/indent-blankline.nvim",
     config = function()
       vim.opt.termguicolors = true
