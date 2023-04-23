@@ -35,7 +35,6 @@ M.general = {
 
 M.tabufline = {
   plugin = true,
-
   n = {
     ["<S-L>"] = {
       function()
@@ -43,7 +42,6 @@ M.tabufline = {
       end,
       "goto next buffer",
     },
-
     ["<S-H>"] = {
       function()
         require("nvchad_ui.tabufline").tabuflinePrev()
@@ -63,11 +61,9 @@ M.tabufline = {
 
 M.nvimtree = {
   plugin = true,
-
   n = {
     -- toggle
     ["<leader>e"] = { "<cmd> NvimTreeToggle <CR>", "toggle file explorator" },
-
     -- focus
     ["<leader>o"] = { "<cmd> NvimTreeFocus <CR>", "focus file navigator" },
   },
@@ -75,7 +71,6 @@ M.nvimtree = {
 
 M.telescope = {
   plugin = true,
-
   n = {
     -- theme switcher
     ["<leader>ut"] = { "<cmd> Telescope themes <CR>", "nvchad themes" },
