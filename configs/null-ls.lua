@@ -14,8 +14,8 @@ null_ls.setup {
   -- Format with LSP if possible
   on_attach = function(client, bufnr)
     if client.supports_method "textDocument/formatting" then
-      client.server_capabilities.documentFormattingProvider = false
-      client.server_capabilities.documentRangeFormattingProvider = false
+      client.server_capabilities.documentFormattingProvider = true
+      client.server_capabilities.documentRangeFormattingProvider = true
       vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
       vim.api.nvim_create_autocmd("BufWritePre", {
         group = augroup,

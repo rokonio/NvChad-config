@@ -17,7 +17,7 @@ end
 -- called in overrides.lua, plugins.lua, NEEDED null-ls
 
 -- Don't forget to run :MasonInstallAll when changing one of the value
-local rust = false
+local rust = true
 local typescript = false
 local lua = true
 local c = false
