@@ -18,14 +18,15 @@ vim.opt.cmdheight = 0
 vim.opt.relativenumber = true
 vim.opt.autoindent = true
 vim.opt.expandtab = true -- convert tabs to spaces
--- vim.opt.shiftwidth = 4 -- the number of spaces inserted for each indentation
--- vim.opt.softtabstop = 4
 
+-- Quit nvimtree when it's the last buffer
 autocmd("QuitPre", {
   callback = function()
     vim.cmd "NvimTreeClose"
   end,
 })
+
+-- Open nvim tree when a directory is specified
 local function open_nvim_tree(data)
   -- buffer is a directory
   local directory = vim.fn.isdirectory(data.file) == 1

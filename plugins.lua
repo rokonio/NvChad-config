@@ -1,5 +1,7 @@
-local lang_plugins = require("custom.configs.langs").plugin()
-local overrides = require "custom.configs.overrides"
+local additional_plugins = require("custom.configs.langs").additional_plugins
+local treesitter_parsers = require("custom.configs.langs").treesitter_parsers
+local mason_other_servers = require("custom.configs.langs").mason_other_servers
+local mason_lspconfig_servers = require("custom.configs.langs").mason_lspconfig_servers
 
 ---@type NvPluginSpec[]
 local plugins = {
@@ -9,14 +11,19 @@ local plugins = {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      -- format & linting
       {
-        "williamboman/mason.nvim",
-        opts = overrides.mason,
-      },
-      {
-        "williamboman/mason-lspconfig",
-        after = "mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = {
+          {
+            "williamboman/mason.nvim",
+            opts = {
+              ensure_installed = mason_other_servers(),
+            },
+          },
+        },
+        opts = {
+          ensure_installed = mason_lspconfig_servers(),
+        },
       },
       {
         "jose-elias-alvarez/null-ls.nvim",
@@ -26,21 +33,49 @@ local plugins = {
       },
     },
     config = function()
+      local mr = require "mason-registry"
+      local function ensure_installed()
+        for _, tool in ipairs(mason_other_servers()) do
+          local p = mr.get_package(tool)
+          if not p:is_installed() then
+            p:install()
+          end
+        end
+      end
+      if mr.refresh then
+        mr.refresh(ensure_installed)
+      else
+        ensure_installed()
+      end
       require "plugins.configs.lspconfig"
       require "custom.configs.lspconfig"
-    end, -- Override to setup mason-lspconfig
+    end,
   },
-
-  -- override plugin configs
 
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = overrides.treesitter,
+    opts = {
+      ensure_installed = treesitter_parsers(),
+    },
   },
 
   {
     "nvim-tree/nvim-tree.lua",
-    opts = overrides.nvimtree,
+    opts = {
+      git = {
+        enable = true,
+      },
+
+      renderer = {
+        highlight_git = true,
+        root_folder_label = true,
+        icons = {
+          show = {
+            git = true,
+          },
+        },
+      },
+    },
   },
 
   {
@@ -117,13 +152,6 @@ local plugins = {
     "Darazaki/indent-o-matic",
     lazy = false,
   },
-  {
-    "ggandor/leap.nvim",
-    lazy = false,
-    config = function()
-      require("leap").add_default_mappings(true)
-    end,
-  },
 
   -- To make a plugin not be loaded
   -- {
@@ -132,6 +160,6 @@ local plugins = {
   -- },
 }
 
-vim.list_extend(plugins, lang_plugins)
+vim.list_extend(plugins, additional_plugins())
 
 return plugins
